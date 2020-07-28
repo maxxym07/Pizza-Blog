@@ -1,0 +1,36 @@
+{
+  "blogs": [
+    {
+      "id": 1,
+      "title": "title 1",
+      "text": "first pizza",
+      "author": "max",
+      "image": "https://cdn.segodnya.ua/i/image_650x/media/image/5d9/c90/e8a/5d9c90e8a57a5.jpg",
+      "date": "2020-07-28T10:04:57.864Z"
+    },
+    {
+      "title": "title 2",
+      "text": "second pizza",
+      "author": "taras",
+      "image": "https://cdn.segodnya.ua/i/image_650x/media/image/5d9/c90/e8a/5d9c90e8a57a5.jpg",
+      "date": "2020-07-28T10:06:25.359Z",
+      "id": 2
+    },
+    {
+      "title": "title 4",
+      "text": "fourth pizza",
+      "author": "mister X",
+      "image": "https://cdn.segodnya.ua/i/image_650x/media/image/5d9/c90/e8a/5d9c90e8a57a5.jpg",
+      "date": "2020-07-28T10:07:22.878Z",
+      "id": 3
+    },
+    {
+      "title": "title 3",
+      "text": "редагуй мене",
+      "author": "Редактор 001",
+      "image": "https://cdn.segodnya.ua/i/image_650x/media/image/5d9/c90/e8a/5d9c90e8a57a5.jpg",
+      "date": "2020-07-28T10:07:39.247Z",
+      "id": 4
+    }
+  ]
+}

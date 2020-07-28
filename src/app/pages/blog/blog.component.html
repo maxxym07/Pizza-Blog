@@ -1,0 +1,12 @@
+<div class="container-fluid mt-2">
+  <div class="row">
+    <div class="card col-4 mb-3" *ngFor="let b of userBlogs">
+      <img class="card-img-top" [src]="b.image" alt="Card image cap">
+      <div class="card-body">
+      <div class="timeAuthor"><span class="card-text text-info">{{b.date|date}}</span> <span class="card-text text-info author">{{b.author|titlecase}}</span> </div>  
+        <h5 class="card-title">{{ b.title |titlecase }}</h5>
+        <p class="card-text">{{ b.text }}.</p>
+      </div>
+    </div>
+  </div>
+</div>
