@@ -17,14 +17,6 @@
       "id": 2
     },
     {
-      "title": "title 4",
-      "text": "fourth pizza",
-      "author": "mister X",
-      "image": "https://cdn.segodnya.ua/i/image_650x/media/image/5d9/c90/e8a/5d9c90e8a57a5.jpg",
-      "date": "2020-07-28T10:07:22.878Z",
-      "id": 3
-    },
-    {
       "title": "title 3",
       "text": "редагуй мене",
       "author": "Редактор 001",
@@ -32,5 +24,23 @@
       "date": "2020-07-28T10:07:39.247Z",
       "id": 4
     }
-  ]
+  ],
+  "categories": [
+    {
+      "nameEN": "max",
+      "nameUA": "max",
+      "id": 1
+    },
+    {
+      "nameEN": "pizza",
+      "nameUA": "піца",
+      "id": 2
+    },
+    {
+      "nameEN": "salad",
+      "nameUA": "salad",
+      "id": 3
+    }
+  ],
+  "products": []
 }

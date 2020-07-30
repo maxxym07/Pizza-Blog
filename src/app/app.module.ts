@@ -16,6 +16,11 @@ import { PoductsComponent } from './pages/poducts/poducts.component';
 import { BlogComponent } from './pages/blog/blog.component';
 import { AboutComponent } from './pages/about/about.component';
 
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { SearchPipe } from './shared/pipes/search.pipe';
+import { SortPipe } from './shared/pipes/sort.pipe';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,14 +33,16 @@ import { AboutComponent } from './pages/about/about.component';
     HomeComponent,
     PoductsComponent,
     BlogComponent,
-    AboutComponent
+    AboutComponent,
+    SearchPipe,
+    SortPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
-
+    HttpClientModule,
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
