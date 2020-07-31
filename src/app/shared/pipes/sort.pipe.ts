@@ -24,7 +24,7 @@ export class SortPipe implements PipeTransform {
       })
     }
 
-    if (sortIDCol == undefined) {
+    if (sortIDCol == true) {
       return cat.sort(function (a, b) {
         if (a.id < b.id) {
           return -1

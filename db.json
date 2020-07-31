@@ -27,39 +27,34 @@
   ],
   "categories": [
     {
-      "nameEN": "auba",
-      "nameUA": "auba",
+      "nameEN": "alcohol",
+      "nameUA": "алкоголь",
       "id": 1
     },
     {
-      "nameEN": "dama",
-      "nameUA": "dama",
+      "nameEN": "cheesse",
+      "nameUA": "сир",
       "id": 2
     },
     {
-      "nameEN": "fama",
-      "nameUA": "fama",
+      "nameEN": "drink",
+      "nameUA": "напій",
       "id": 3
     },
     {
-      "nameEN": "mama",
-      "nameUA": "mama",
+      "nameEN": "pizza",
+      "nameUA": "піца",
       "id": 4
     },
     {
-      "nameEN": "zzzzz",
-      "nameUA": "zzzz",
+      "nameEN": "salad",
+      "nameUA": "салат",
+      "id": 5
+    },
+    {
+      "nameEN": "banana",
+      "nameUA": "банан",
       "id": 6
-    },
-    {
-      "nameEN": "ccccc",
-      "nameUA": "ccccc",
-      "id": 7
-    },
-    {
-      "nameEN": "weferg",
-      "nameUA": "gregh",
-      "id": 8
     }
   ],
   "products": []

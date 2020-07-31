@@ -16,7 +16,7 @@ export class AdminCategoryComponent implements OnInit {
   categoryID = 1;
   nameEN: string;
   nameUA: string;
-  categoryStatus: boolean;
+  categoryStatus: boolean; //for butDisable
 
   delete_id: number;
 
@@ -56,9 +56,7 @@ export class AdminCategoryComponent implements OnInit {
       this.resetForm()
       this.modalService.hide(1);
     }
-    else {
-      alert('All fields must be field')
-    }
+
   }
 
   deleteModal(template: TemplateRef<any>,category:ICategory): void {
