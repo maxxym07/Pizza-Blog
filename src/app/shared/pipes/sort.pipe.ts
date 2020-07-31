@@ -7,7 +7,6 @@ import { ICategory } from '../interfaces/category.interface';
 export class SortPipe implements PipeTransform {
 
   transform(cat: Array<ICategory>, sortIDCol: boolean, sortENCol: boolean, sortUACol: boolean): unknown {
-
     if (sortENCol == true) {
       return cat.sort(function (a, b) {
         if (a.nameEN.toLowerCase()< b.nameEN.toLowerCase()) {
@@ -32,7 +31,7 @@ export class SortPipe implements PipeTransform {
         }
       })
     }
-
+  
     else {
       return cat.reverse()
     }
