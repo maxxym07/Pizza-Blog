@@ -39,17 +39,3 @@ export class SortPipe implements PipeTransform {
   }
 
 }
-
-
-// if (sortENCol == true) {
-//   return cat.sort((a, b) => a.nameEN.toLowerCase() < b.nameEN.toLowerCase() ? -1 : 1);
-// };
-
-// if (sortUACol == true) {
-//   return cat.sort((a, b) => a.nameUA.toLowerCase() < b.nameUA.toLowerCase() ? -1 : 1);
-// };
-
-// if (!sortIDCol == true) {
-//   return cat.sort((a, b) => a.id < b.id ? -1 : 1);
-// }
-// else return cat.reverse();
