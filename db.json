@@ -27,19 +27,39 @@
   ],
   "categories": [
     {
-      "nameEN": "max",
-      "nameUA": "max",
+      "nameEN": "auba",
+      "nameUA": "auba",
       "id": 1
     },
     {
-      "nameEN": "pizza",
-      "nameUA": "піца",
+      "nameEN": "dama",
+      "nameUA": "dama",
       "id": 2
     },
     {
-      "nameEN": "salad",
-      "nameUA": "salad",
+      "nameEN": "fama",
+      "nameUA": "fama",
       "id": 3
+    },
+    {
+      "nameEN": "mama",
+      "nameUA": "mama",
+      "id": 4
+    },
+    {
+      "nameEN": "zzzzz",
+      "nameUA": "zzzz",
+      "id": 6
+    },
+    {
+      "nameEN": "ccccc",
+      "nameUA": "ccccc",
+      "id": 7
+    },
+    {
+      "nameEN": "weferg",
+      "nameUA": "gregh",
+      "id": 8
     }
   ],
   "products": []
