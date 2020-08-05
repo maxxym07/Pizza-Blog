@@ -48,13 +48,13 @@
   </div>
   <div class="modal-body">
     <div class="bodyModal d-flex">
-      <input type="text" class="form-control col-6" placeholder="name EN here.." id="nameEN" [(ngModel)]="nameEN" name="nameEN">
-      <input type="text" class="form-control  col-6 ml-2" placeholder="name UA here.." id="nameUA" [(ngModel)]="nameUA" name="nameUA">
+      <input type="text" class="form-control col-6"  [(ngModel)]="nameEN" name="nameEN" (input)="checkInputs()" placeholder="name EN here.." id="nameEN">
+      <input type="text" class="form-control  col-6 ml-2" [(ngModel)]="nameUA" name="nameUA" (input)="checkInputs()"  placeholder="name UA here.." id="nameUA">
     </div>
     <hr>
     <div class="foot">
       <button type="button" class="btn btn-secondary mr-2" (click)="modalRef.hide()">Close</button>
-    <button type="button" class="btn btn-secondary" (click)="addCategory()" [disabled]="categoryStatus">Add</button>
+    <button type="button" class="btn btn-secondary" (click)="addCategory()" [disabled]="!categoryStatus">Add</button>
     </div>
   </div>
 </ng-template>

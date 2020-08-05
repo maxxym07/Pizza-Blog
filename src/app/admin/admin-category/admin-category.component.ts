@@ -16,13 +16,14 @@ export class AdminCategoryComponent implements OnInit {
   categoryID = 1;
   nameEN: string;
   nameUA: string;
-  categoryStatus: boolean; //for butDisable
 
   delete_id: number;
 
   sortIDCol: boolean;
   sortENCol: boolean;
   sortUACol: boolean;
+
+  categoryStatus = false;//for butDisable
 
   inputS:string//for search in table
 
@@ -44,8 +45,6 @@ export class AdminCategoryComponent implements OnInit {
   }
 
   addCategory(): void {
-    if (this.nameEN && this.nameUA) {
-
       const newC = new Category(this.categoryID, this.nameEN, this.nameUA);
       delete newC.id;
       this.catService.postJSONCategory(newC).subscribe(
@@ -55,8 +54,6 @@ export class AdminCategoryComponent implements OnInit {
       );
       this.resetForm()
       this.modalService.hide(1);
-    }
-
   }
 
   deleteModal(template: TemplateRef<any>,category:ICategory): void {
@@ -71,6 +68,15 @@ export class AdminCategoryComponent implements OnInit {
       }
     );
     this.modalService.hide(1);
+  }
+
+  checkInputs(): void{
+    if (!this.nameUA || !this.nameEN) {
+      this.categoryStatus = false;
+    }
+    else {
+      this.categoryStatus = true;
+    }
   }
 
   private resetForm(): void {
