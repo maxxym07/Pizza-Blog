@@ -1,1 +1,139 @@
-<p>admin-products works!</p>
+ <div class="card">
+    <div class="card-header">
+      <p class="card-text pFirst font-weight-bold">Products</p>
+      <button type="button" class="btn btn-dark butAdd" (click)="openModal(modal1)">Add Product</button>
+    </div>
+
+    <div class="card-body">
+      <input type="text"  class="form-control" [(ngModel)]="inputS" name="inputS" placeholder="filter products..">
+      <hr>
+      <table class="table">
+        <thead class="table-active">
+          <tr>
+            <th scope="col" [ngStyle]="{'cursor': 'pointer'}"  [ngStyle]="{'width': '60px'}"
+            [class.active]="order === 'id'" (click)="setOrder('id')">#
+            <span [hidden]="reverse">▼</span>
+            <span [hidden]="!reverse">▲</span>
+            </th>
+            <th scope="col" [class.active]="order === 'category.nameEN'" (click)="setOrder('category.nameEN')">Category Name
+              <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span>
+            </th>
+            <th scope="col" class="text-secondary" [ngStyle]="{'cursor': 'pointer'}" 
+            [class.active]="order === 'nameEN'" (click)="setOrder('nameEN')"
+            class="mdl-data-table__cell--non-numeric">Name EN
+            <span [hidden]="reverse">▼</span>
+            <span [hidden]="!reverse">▲</span>
+            </th>
+            <th scope="col" class="text-secondary" [ngStyle]="{'cursor': 'pointer'}"
+            [class.active]="order === 'nameUA'" (click)="setOrder('nameUA')"
+            class="mdl-data-table__cell--non-numeric">Name UA
+              <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span>
+            </th>
+            <th scope="col">Description</th>
+            <th scope="col" [class.active]="order === 'weight'" (click)="setOrder('weight')"
+                            class="mdl-data-table__cell--non-numeric">Weight
+              <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span>
+            </th>
+            <th scope="col"[class.active]="order === 'price'" (click)="setOrder('price')"
+                          class="mdl-data-table__cell--non-numeric" >Price
+              <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span>
+            </th>
+            <th scope="col" class="text-secondary" [ngStyle]="{'width': '25px'}">Edit</th>
+            <th scope="col" class="text-secondary" [ngStyle]="{'width': '25px'}">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of adminProduct|searchProducts:inputS|orderBy: order:reverse:'case-insensitive'; let i=index">
+        <td class="font-weight-bold">{{ p.id }}</td>
+        <td>{{ p.category.nameEN }}</td>
+        <td>{{ p.nameEN |titlecase}}</td>
+        <td>{{ p.nameUA |titlecase}}</td>
+        <td>{{ p.description }}</td>
+        <td>{{ p.weight }}</td>
+        <td>{{ p.price }}</td>
+             <td>
+            <input type="button" value="Edit" class="btn btn-dark" (click)="editModal(modal1,p)" >
+          </td>
+            <td>
+              <input type="button" value="delete" class="btn btn-dark" (click)="deleteModal(modalDelete,p)" >
+            </td>
+          </tr>
+        </tbody>
+      </table> 
+    </div>
+</div>
+
+
+<ng-template #modal1>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Product modal</h4>
+      <button type="button" class="close pull-right" aria-label="Close"(click)="modalRef.hide()" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+              <label for="categoryChoose" class="font-weight-bold">Choose category </label>
+              <select class="form-control" [(ngModel)]="categoryName" name="categoryName" (change)="setCategory()" id="categoryChoose">
+                <option value="choose category.." disabled>choose category..</option>
+                <option *ngFor="let category of categories">
+                    {{ category.nameEN }}
+                </option>
+              </select>
+         
+              <div class="form-group">
+                  <label for="productNameEN" class="font-weight-bold">Name EN</label>
+                  <input type="text" class="form-control" id="productNameEN" [(ngModel)]="productNameEN" name="productNameEN" placeholder="eng name here..">
+                </div>
+                <div class="form-group">
+                  <label for="productNameUA"class="font-weight-bold">Name UA</label>
+                  <input type="text" class="form-control" id="productNameUA" [(ngModel)]="productNameUA" name="productNameUA" placeholder="urk name here..">
+                </div>
+                <div class="form-group">
+                  <label for="productDescription" class="font-weight-bold">Description</label>
+                  <textarea [(ngModel)]="productDescription" name="productDescription" id="productDescription"  class="form-control" rows="3" placeholder="about product here.."></textarea>
+                </div>
+                <div class="namesProducts d-flex justify-content-between">
+                <div class="form-group">
+                  <label for="productWeight" class="font-weight-bold ">Weight</label>
+                  <input type="text" class="form-control" id="productWeight" [(ngModel)]="productWeight" name="productWeight" placeholder="weight here..">
+                </div>
+                <div class="form-group">
+                  <label for="productPrice" class="font-weight-bold">Price</label>
+                  <input type="number" class="form-control" id="productPrice" [(ngModel)]="productPrice" name="productPrice" placeholder="price here..">
+                </div>
+            </div>
+                <div class="custom-file mb-3" style="overflow: hidden;">
+                  <input (change)="uploadFile($event)" type="file" class="custom-file-input" id="productImage" required>
+                  <label class="custom-file-label" for="productImage">Choose image...</label>
+                </div>
+                <div class="progress mb-3" *ngIf="!imageStatus">
+                  <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                   [style.width]="(uploadProgress | async) + '%'"></div>
+                </div>
+                <div class="image mb-3" *ngIf="imageStatus" style="width: 200px; height: 200px;">
+                  <img [src]="productImage" alt="" style="width: 100%; height: 100%;">
+                </div>
+            </div>
+          </form>
+      <hr>
+      <div class="foot">
+        <button type="button" class="btn btn-secondary mr-2" (click)="modalRef.hide()" (click)="closeModal()">Close</button>
+      <button type="button" class="btn btn-dark" (click)="addProduct()" [textContent]="!editStatus ? 'Добавити' : 'Зберегти'"></button>
+      </div>
+    </div>
+  </ng-template>
+
+
+  
+  <ng-template #modalDelete>
+    <div class="modal-body">
+      <button type="button" class="btn btn-dark mr-2 butAdd1" (click)="modalRef.hide()" (click)="closeModal()">Dismiss</button>
+      <button type="button" class="btn btn-danger butAdd1" (click)="deleteProduct()">Delete</button>
+    </div>
+  </ng-template>

@@ -6,7 +6,7 @@
       "text": "first pizza",
       "author": "max",
       "image": "https://cdn.segodnya.ua/i/image_650x/media/image/5d9/c90/e8a/5d9c90e8a57a5.jpg",
-      "date": "2020-07-28T10:04:57.864Z"
+      "date": "2020-08-07T14:36:29.389Z"
     },
     {
       "title": "title 2",
@@ -15,47 +15,85 @@
       "image": "https://cdn.segodnya.ua/i/image_650x/media/image/5d9/c90/e8a/5d9c90e8a57a5.jpg",
       "date": "2020-07-28T10:06:25.359Z",
       "id": 2
-    },
-    {
-      "title": "title 3",
-      "text": "редагуй мене",
-      "author": "Редактор 001",
-      "image": "https://cdn.segodnya.ua/i/image_650x/media/image/5d9/c90/e8a/5d9c90e8a57a5.jpg",
-      "date": "2020-07-28T10:07:39.247Z",
-      "id": 4
     }
   ],
   "categories": [
     {
-      "nameEN": "alcohol",
-      "nameUA": "алкоголь",
+      "nameEN": "pizza",
+      "nameUA": "піца",
       "id": 1
     },
     {
-      "nameEN": "cheesse",
-      "nameUA": "сир",
+      "nameEN": "salad",
+      "nameUA": "салат",
       "id": 2
     },
     {
       "nameEN": "drink",
       "nameUA": "напій",
       "id": 3
-    },
-    {
-      "nameEN": "pizza",
-      "nameUA": "піца",
-      "id": 4
-    },
-    {
-      "nameEN": "salad",
-      "nameUA": "салат",
-      "id": 5
-    },
-    {
-      "nameEN": "banana",
-      "nameUA": "банан",
-      "id": 6
     }
   ],
-  "products": []
+  "products": [
+    {
+      "id": 1,
+      "category": {
+        "nameEN": "pizza",
+        "nameUA": "піца",
+        "id": 1
+      },
+      "nameEN": "carbonara1",
+      "nameUA": "карбонара1",
+      "description": "аувакуппк1",
+      "weight": "2121",
+      "price": 1501,
+      "image": "https://firebasestorage.googleapis.com/v0/b/pizza-blog.appspot.com/o/images%2F.jpg.jpeg?alt=media&token=ce84456f-47ab-4954-bcc1-63f044463085",
+      "count": 1
+    },
+    {
+      "category": {
+        "nameEN": "salad",
+        "nameUA": "салат",
+        "id": 2
+      },
+      "nameEN": "cezar",
+      "nameUA": "цезар",
+      "description": "2121324салат",
+      "weight": "150",
+      "price": 250,
+      "image": "https://firebasestorage.googleapis.com/v0/b/pizza-blog.appspot.com/o/images%2F.jpg.jpeg?alt=media&token=e2fad71e-e785-436a-9168-7ac7e7e22b2b",
+      "count": 1,
+      "id": 2
+    },
+    {
+      "id": 3,
+      "category": {
+        "id": 1,
+        "nameEN": "pizza",
+        "nameUA": "піца"
+      },
+      "nameEN": "la piec",
+      "nameUA": "ла пєц",
+      "description": "ла пєцла пєцла пєцла пєцла пєц",
+      "weight": "111",
+      "price": 2324,
+      "image": "https://firebasestorage.googleapis.com/v0/b/pizza-blog.appspot.com/o/images%2F.jpg.jpeg?alt=media&token=5eed1fb4-9e55-4819-8cd4-de331902d344",
+      "count": 1
+    },
+    {
+      "category": {
+        "nameEN": "drink",
+        "nameUA": "напій",
+        "id": 3
+      },
+      "nameEN": "pepsi",
+      "nameUA": "пепсі",
+      "description": "пепсіпепсіпепсіпепсі",
+      "weight": "1л",
+      "price": 35,
+      "image": "https://firebasestorage.googleapis.com/v0/b/pizza-blog.appspot.com/o/images%2F.jpg.jpeg?alt=media&token=8d55b6a1-5d0d-415a-a4b4-2bc64414d191",
+      "count": 1,
+      "id": 4
+    }
+  ]
 }

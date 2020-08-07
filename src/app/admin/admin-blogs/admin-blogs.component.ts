@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BlogsService } from '../../shared/services/blogs.service';
 import { IBlog } from "src/app/shared/interfaces/blog.interfaces"
 import { Blog } from "src/app/shared/models/blog.model"
+import { OrderPipe } from 'ngx-order-pipe';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-admin-blogs',
@@ -9,6 +11,10 @@ import { Blog } from "src/app/shared/models/blog.model"
   styleUrls: ['./admin-blogs.component.scss']
 })
 export class AdminBlogsComponent implements OnInit {
+  modalRef: BsModalRef;//for modal
+  config = {
+    ignoreBackdropClick: true
+  }
   adminBlog: Array<IBlog> = [];
   editStatus=false;
   bID: number = 1;
@@ -17,7 +23,18 @@ export class AdminBlogsComponent implements OnInit {
   bText: string;
   dImage='https://cdn.segodnya.ua/i/image_650x/media/image/5d9/c90/e8a/5d9c90e8a57a5.jpg'
 
-  constructor(private blogService:BlogsService) { }
+  inputS: string;
+  delete_id: number;
+
+    //for sort
+    order: string = 'id';
+    reverse: boolean = false;
+    //for sort
+
+  constructor(private blogService: BlogsService,
+    private orderPipe: OrderPipe,
+    private modalService: BsModalService
+  ) { }
 
   ngOnInit(): void {
     this.adminJSONBlogs()
@@ -27,6 +44,10 @@ export class AdminBlogsComponent implements OnInit {
     this.blogService.getJSONBlogs().subscribe(data => {
       this.adminBlog=data
     })
+  }
+
+  openModal(template: TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(template,this.config);
   }
 
   addBlog(): void{
@@ -67,12 +88,27 @@ export class AdminBlogsComponent implements OnInit {
     }
   }
 
-  editDiscount(blog: IBlog): void{
+  deleteModal(template: TemplateRef<any>, adminBlog: IBlog): void {
+    this.modalRef = this.modalService.show(template,this.config);
+    this.delete_id = adminBlog.id
+  }
+
+  deleteBlog(): void {
+    this.blogService.deleteJSONBlog(this.delete_id).subscribe(
+      () => {
+        this.adminJSONBlogs();
+      }
+    );
+    this.modalService.hide(1);
+  }
+
+  editModal(template: TemplateRef<any>,blog: IBlog): void{
+    this.editStatus = true;
+    this.modalRef = this.modalService.show(template,this.config);
     this.bID = blog.id;
     this.bTitle = blog.title;
     this.bText = blog.text;
     this.bAuthor=blog.author
-    this.editStatus = true;
   }
 
   private resetForm(): void {
@@ -80,5 +116,23 @@ export class AdminBlogsComponent implements OnInit {
     this.bTitle = '';
     this.bText = '';
     this.bAuthor = '';
+    this.modalService.hide(1);
   }
+
+  closeModal(): void {
+    this.bID = 1;
+    this.bTitle = '';
+    this.bText = '';
+    this.bAuthor = '';
+    this.modalService.hide(1);
+    this.editStatus = false;
+  }
+
+    //sort pipe
+    setOrder(value: string) {
+      if (this.order === value) {
+        this.reverse = !this.reverse;
+      }
+      this.order = value;
+    }
 }

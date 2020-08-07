@@ -1,4 +1,4 @@
-<input type="text" class="form-control " [(ngModel)]="bTitle" name="bTitle" id="title" placeholder="title here..">
+<!-- <input type="text" class="form-control " [(ngModel)]="bTitle" name="bTitle" id="title" placeholder="title here..">
 
 <textarea [(ngModel)]="bText" name="bText" id="dText" class="form-control"
 style="width: 100%; min-height: 200px; margin-top: 20px;" placeholder="text here..."></textarea>
@@ -34,4 +34,104 @@ style="width: 100%; min-height: 200px; margin-top: 20px;" placeholder="text here
         </td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
+
+
+  <div class="card">
+    <div class="card-header">
+      <p class="card-text pFirst font-weight-bold">Blog </p>
+      <button type="button" class="btn btn-dark butAdd" (click)="openModal(modal1)">Add Blog</button>
+    </div>
+
+    <div class="card-body">
+      <input type="text"  class="form-control" [(ngModel)]="inputS" name="inputS" placeholder="filter blogs..">
+      <hr>
+      <table class="table">
+        <thead class="table-active">
+          <tr>
+            <th scope="col" [ngStyle]="{'cursor': 'pointer'}"  [ngStyle]="{'width': '60px'}"
+            [class.active]="order === 'id'" (click)="setOrder('id')">#
+            <span [hidden]="reverse">▼</span>
+            <span [hidden]="!reverse">▲</span>
+            </th>
+            <th scope="col" [class.active]="order === 'title'" (click)="setOrder('title')">Title
+              <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span>
+            </th>
+            <th scope="col" class="text-secondary" [ngStyle]="{'cursor': 'pointer'}">Text</th>
+            <th scope="col" class="text-secondary" [ngStyle]="{'cursor': 'pointer'}"
+            [class.active]="order === 'date'" (click)="setOrder('date')"
+            class="mdl-data-table__cell--non-numeric">Date
+              <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span>
+            </th>
+            <th scope="col" [class.active]="order === 'author'" (click)="setOrder('author')"
+                            class="mdl-data-table__cell--non-numeric">Author
+              <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span>
+            </th>
+            <th scope="col" class="text-secondary" [ngStyle]="{'width': '25px'}">Edit</th>
+            <th scope="col" class="text-secondary" [ngStyle]="{'width': '25px'}">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of adminBlog|blogSearch:inputS|orderBy: order:reverse:'case-insensitive'; let i=index">
+        <td class="font-weight-bold">{{ a.id }}</td>
+        <td>{{ a.title }}</td>
+        <td>{{ a.text }}</td>
+        <td>{{ a.date|date}}</td>
+        <td>{{ a.author |titlecase }}</td>
+             <td>
+            <input type="button" value="Edit" class="btn btn-dark" (click)="editModal(modal1,a)" >
+          </td>
+            <td>
+              <input type="button" value="delete" class="btn btn-dark" (click)="deleteModal(modalDelete,a)" >
+            </td>
+          </tr>
+        </tbody>
+      </table> 
+    </div>
+</div>
+
+
+<ng-template #modal1>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Product modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close"(click)="modalRef.hide()" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <form>
+          <div class="form-group">
+            <div class="form-group">
+                <label for="title" class="font-weight-bold">Title</label>
+                <input type="text" class="form-control " [(ngModel)]="bTitle" name="bTitle" id="title" placeholder="title here..">
+              </div>
+              <div class="form-group">
+                <label for="dText"class="font-weight-bold">Text</label>
+                <textarea [(ngModel)]="bText" name="bText" id="dText" class="form-control"
+                style="width: 100%; min-height: 200px; margin-top: 20px;" placeholder="text here..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="author" class="font-weight-bold">Author</label>
+                <input type="text" class="form-control " id="author" [(ngModel)]="bAuthor" name="bAuthor" placeholder="author here.." style="margin-top: 20px;">
+              </div>
+          </div>
+        </form>
+    <hr>
+    <div class="foot">
+      <button type="button" class="btn btn-secondary mr-2" (click)="modalRef.hide()" (click)="closeModal()">Close</button>
+    <button type="button" class="btn btn-dark" (click)="addBlog()" [textContent]="!editStatus ? 'Добавити' : 'Зберегти'"></button>
+    </div>
+  </div>
+</ng-template>
+
+
+
+<ng-template #modalDelete>
+  <div class="modal-body">
+    <button type="button" class="btn btn-dark mr-2 butAdd1" (click)="modalRef.hide()" (click)="closeModal()">Dismiss</button>
+    <button type="button" class="btn btn-danger butAdd1" (click)="deleteBlog()">Delete</button>
+  </div>
+</ng-template>

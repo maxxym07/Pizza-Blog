@@ -19,6 +19,15 @@ import { AboutComponent } from './pages/about/about.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SearchPipe } from './shared/pipes/search.pipe';
 import { SortPipe } from './shared/pipes/sort.pipe';
+import { OrderModule } from 'ngx-order-pipe';
+
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { environment } from '../environments/environment';
+import { SeachProductsPipe } from './shared/pipes/seach-products.pipe';
+import { BlogSearchPipe } from './shared/pipes/blog-search.pipe';
 
 
 @NgModule({
@@ -35,14 +44,21 @@ import { SortPipe } from './shared/pipes/sort.pipe';
     BlogComponent,
     AboutComponent,
     SearchPipe,
-    SortPipe
+    SortPipe,
+    SeachProductsPipe,
+    BlogSearchPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    OrderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
