@@ -28,4 +28,12 @@ export class ProductService {
   updateJSONProduct(product: IProduct): Observable<IProduct>{
     return this.http.put<IProduct>(`${this.url}/${product.id}`, product);
   }
+
+  getCategoryProduct(name: string): Observable<Array<IProduct>> {
+    return this.http.get<Array<IProduct>>(`${this.url}?category.nameEN=${name}`);
+  }
+
+  getOneProduct(id: number): Observable<IProduct> {
+    return this.http.get<IProduct>(`${this.url}/${id}`);
+  }
 }

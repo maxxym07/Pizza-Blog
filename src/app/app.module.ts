@@ -12,7 +12,6 @@ import { AdminProductsComponent } from './admin/admin-products/admin-products.co
 import { AdminComponent } from './admin/admin.component';
 import { AdminBlogsComponent } from './admin/admin-blogs/admin-blogs.component';
 import { HomeComponent } from './pages/home/home.component';
-import { PoductsComponent } from './pages/poducts/poducts.component';
 import { BlogComponent } from './pages/blog/blog.component';
 import { AboutComponent } from './pages/about/about.component';
 
@@ -28,6 +27,11 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { SeachProductsPipe } from './shared/pipes/seach-products.pipe';
 import { BlogSearchPipe } from './shared/pipes/blog-search.pipe';
+import { BasketComponent } from './pages/basket/basket.component';
+import { ProductComponent } from './pages/product/product.component';
+import { ProductDetailsComponent } from './pages/product-details/product-details.component';
+import { PaymentComponent } from './pages/payment/payment.component';
+
 
 
 @NgModule({
@@ -40,13 +44,16 @@ import { BlogSearchPipe } from './shared/pipes/blog-search.pipe';
     AdminComponent,
     AdminBlogsComponent,
     HomeComponent,
-    PoductsComponent,
     BlogComponent,
     AboutComponent,
     SearchPipe,
     SortPipe,
     SeachProductsPipe,
-    BlogSearchPipe
+    BlogSearchPipe,
+    BasketComponent,
+    ProductDetailsComponent,
+    ProductComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,

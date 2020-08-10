@@ -36,19 +36,19 @@
   ],
   "products": [
     {
-      "id": 1,
       "category": {
         "nameEN": "pizza",
         "nameUA": "піца",
         "id": 1
       },
-      "nameEN": "carbonara1",
-      "nameUA": "карбонара1",
-      "description": "аувакуппк1",
-      "weight": "2121",
-      "price": 1501,
-      "image": "https://firebasestorage.googleapis.com/v0/b/pizza-blog.appspot.com/o/images%2F.jpg.jpeg?alt=media&token=ce84456f-47ab-4954-bcc1-63f044463085",
-      "count": 1
+      "nameEN": "Пицца La П’єц",
+      "nameUA": "Пицца La П’єц",
+      "description": "соус томатный, ветчина, баварские колбаски, сыр моцарелла, колбаса салями, прошутто.",
+      "weight": "350гр",
+      "price": 167,
+      "image": "https://firebasestorage.googleapis.com/v0/b/pizza-blog.appspot.com/o/images%2Fla-p_yets-1.png?alt=media&token=f9ceb8dc-e30a-4662-aa23-7065fb74825b",
+      "count": 1,
+      "id": 1
     },
     {
       "category": {
@@ -56,29 +56,14 @@
         "nameUA": "салат",
         "id": 2
       },
-      "nameEN": "cezar",
-      "nameUA": "цезар",
-      "description": "2121324салат",
-      "weight": "150",
-      "price": 250,
-      "image": "https://firebasestorage.googleapis.com/v0/b/pizza-blog.appspot.com/o/images%2F.jpg.jpeg?alt=media&token=e2fad71e-e785-436a-9168-7ac7e7e22b2b",
+      "nameEN": "Cezar",
+      "nameUA": "Салат Цезарь с жаренным куриным филе",
+      "description": "Салат айсберг, помидоры, куриное мясо, сыр пармезан, перепелинные яйца, ароматные сухарики и фирменная заправка.",
+      "weight": "250",
+      "price": 125,
+      "image": "https://firebasestorage.googleapis.com/v0/b/pizza-blog.appspot.com/o/images%2Ftsezar-z-kurkoyu.png?alt=media&token=c29ddb15-6169-46c0-a401-ad4fa47edef8",
       "count": 1,
       "id": 2
-    },
-    {
-      "id": 3,
-      "category": {
-        "id": 1,
-        "nameEN": "pizza",
-        "nameUA": "піца"
-      },
-      "nameEN": "la piec",
-      "nameUA": "ла пєц",
-      "description": "ла пєцла пєцла пєцла пєцла пєц",
-      "weight": "111",
-      "price": 2324,
-      "image": "https://firebasestorage.googleapis.com/v0/b/pizza-blog.appspot.com/o/images%2F.jpg.jpeg?alt=media&token=5eed1fb4-9e55-4819-8cd4-de331902d344",
-      "count": 1
     },
     {
       "category": {
@@ -86,14 +71,14 @@
         "nameUA": "напій",
         "id": 3
       },
-      "nameEN": "pepsi",
-      "nameUA": "пепсі",
-      "description": "пепсіпепсіпепсіпепсі",
+      "nameEN": "Juice Orange",
+      "nameUA": "Апельсиновый нектар ТМ “RICH”",
+      "description": "Апельсиновый нектар с мякотью, 1 л, ТМ “RICH”",
       "weight": "1л",
-      "price": 35,
-      "image": "https://firebasestorage.googleapis.com/v0/b/pizza-blog.appspot.com/o/images%2F.jpg.jpeg?alt=media&token=8d55b6a1-5d0d-415a-a4b4-2bc64414d191",
+      "price": 40,
+      "image": "https://firebasestorage.googleapis.com/v0/b/pizza-blog.appspot.com/o/images%2Frich_orange.jpeg?alt=media&token=36e898c4-84af-4c83-9afd-3c68bd2354b9",
       "count": 1,
-      "id": 4
+      "id": 3
     }
   ]
 }

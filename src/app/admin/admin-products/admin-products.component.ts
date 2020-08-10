@@ -135,7 +135,7 @@ export class AdminProductsComponent implements OnInit {
   uploadFile(event): void {
     const file = event.target.files[0];
     const type = file.type.slice(file.type.indexOf('/') + 1);
-    const name = file.name.slice(file.name.lastIndexOf('.')).toLowerCase();
+    const name = file.name.slice(0,file.name.lastIndexOf('.')).toLowerCase();
     this.imageStatus = false;
     const filePath = `images/${name}.${type}`;
     const task = this.afStorage.upload(filePath, file);
@@ -146,7 +146,6 @@ export class AdminProductsComponent implements OnInit {
         this.imageStatus = true;
       });
     });
-
   }
 
 
@@ -179,9 +178,10 @@ export class AdminProductsComponent implements OnInit {
     this.productNameUA = '';
     this.productDescription = '';
     this.productWeight = '';
+    this.productImage = '';
     this.productPrice = null;
     this.imageStatus = false;
-    this.categoryName = undefined
+    this.categoryName = "choose category..";
     this.editStatus = false;
   }
 
@@ -191,6 +191,8 @@ export class AdminProductsComponent implements OnInit {
     this.productNameUA = '';
     this.productDescription = '';
     this.productWeight = '';
+    this.productImage = '';
+    this.categoryName = "choose category..";
     this.productPrice = null;
     this.imageStatus = false;
     this.modalService.hide(1);
