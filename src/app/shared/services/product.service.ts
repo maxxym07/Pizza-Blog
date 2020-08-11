@@ -36,4 +36,16 @@ export class ProductService {
   getOneProduct(id: number): Observable<IProduct> {
     return this.http.get<IProduct>(`${this.url}/${id}`);
   }
+
+  productCountService(product: IProduct, status: boolean):number {
+    if (status) {
+      return product.count++;
+    }
+    else {
+      if (product.count > 1) {
+       return product.count--;
+      }
+    }
+  }
+  
 }

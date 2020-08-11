@@ -22,14 +22,14 @@
             </div>
             <div class="productOrder">
               <div class="productPrice">
-                <span>{{ prod.price }}</span> <i>грн</i>
+                <span>{{ prod.price*prod.count }}</span> <i>грн</i>
               </div>
               <div class="productCountWrapper">
-                <span class="productCount lessProduct"></span>
-                <input type="text" maxlength="3" [value]="1">
-                <span class="productCount moreProduct" ></span>
+                <span class="productCount lessProduct" (click)="productCount(prod, false)"></span>
+                <input type="text" maxlength="3" [value]="prod.count">
+                <span class="productCount moreProduct" (click)="productCount(prod, true)" ></span>
               </div>
-              <div class="button add-to-cart-product">Замовити</div>
+              <div class="button add-to-cart-product" (click)="addBasket(prod)">Замовити</div>
             </div>
           </div>
         </div>
