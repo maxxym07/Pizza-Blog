@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/shared/services/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { IProduct } from 'src/app/shared/interfaces/product.interfaces';
+import { OrderService } from 'src/app/shared/services/order.service';
 
 @Component({
   selector: 'app-product-details',
@@ -13,7 +14,8 @@ export class ProductDetailsComponent implements OnInit {
   product: IProduct;
   category = 'pizza';
   constructor(private prodService: ProductService,
-              private actRoute:ActivatedRoute) { }
+    private actRoute: ActivatedRoute,
+    private orderService: OrderService,) { }
 
   ngOnInit(): void {
     this.getMyProduct();
@@ -26,4 +28,13 @@ export class ProductDetailsComponent implements OnInit {
       this.category = this.product?.category.nameEN;
     });
   }
+
+  productCount(product: IProduct, status: boolean): void{
+    this.prodService.productCountService(product,status)
+}
+
+addBasket(product: IProduct): void {
+  this.orderService.addBasketService(product)
+}
+  
 }

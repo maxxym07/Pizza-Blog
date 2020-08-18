@@ -32,6 +32,9 @@ export class HeaderComponent implements OnInit {
       this.totalPrice = this.basket.reduce((total, prod) => {
         return total + (prod.price * prod.count)
       }, 0);
-   }
+    }
+    else {
+      this.totalPrice = 0;
+    }
  }
 }

@@ -31,6 +31,11 @@ import { BasketComponent } from './pages/basket/basket.component';
 import { ProductComponent } from './pages/product/product.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { PaymentComponent } from './pages/payment/payment.component';
+import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
+import { LoginComponent } from './pages/login/login.component';
+import { OrderSearchPipe } from './shared/pipes/order-search.pipe';
+
+
 
 
 
@@ -53,7 +58,11 @@ import { PaymentComponent } from './pages/payment/payment.component';
     BasketComponent,
     ProductDetailsComponent,
     ProductComponent,
-    PaymentComponent
+    PaymentComponent,
+    AdminOrdersComponent,
+    LoginComponent,
+    OrderSearchPipe,
+
   ],
   imports: [
     BrowserModule,

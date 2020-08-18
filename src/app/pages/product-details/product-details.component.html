@@ -64,23 +64,24 @@
               <div class="orderPrizeSection productOrder">
                 <div class="orderDetailSection smallSlideLeft animationDelay-4">
                   <p class="counterTitle">Кількість: </p>
+                  <!-- <app-product-count [product]="product"></app-product-count> -->
                   <div class="productCountWrapper">
-                    <span class="productCount lessProduct"></span>
-                    <input class="product-qty-single" type="text" maxlength="3" [value]="1">
-                    <span class="productCount moreProduct"></span>
+                    <span class="productCount lessProduct" (click)="productCount(product, false)"></span>
+                    <input type="text" maxlength="3" [value]="product?.count">
+                    <span class="productCount moreProduct" (click)="productCount(product, true)"></span>
                   </div>
                 </div>
                 <div class="emptySpace30 emptySpace-xs25"></div>
                 <div class="orderDetailSection smallSlideLeft animationDelay-5">
                   <div class="productPrice">
                     <p>Загалом:</p>
-                    <span class="productDetailPrice">{{product?.price}}</span><i>грн</i>
+                    <span class="productDetailPrice">{{product?.price*product?.count}}</span><i>грн</i>
                   </div>
                 </div>
               </div>
               <div class="emptySpace25 emptySpace-xs5"></div>
               <div class="fadeInTop animationDelay-6">
-                <div class="button addToCart update-cart-product-single">ЗАМОВИТИ</div>
+                <div class="button addToCart update-cart-product-single" (click)="addBasket(product)">ЗАМОВИТИ</div>
               </div>
             </div>
           </div>
