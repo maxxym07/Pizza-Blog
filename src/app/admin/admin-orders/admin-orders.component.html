@@ -115,11 +115,9 @@
 <p [ngStyle]="{'text-align':'center'}" class="font-weight-bold">Загалом: {{ totalPrice }} грн</p> 
 <hr>
     <div class="buttons">
-      <button type="button"  class="btn btn-warning" [textContent]="!editStatus? 'Зберегти зміни замовлення':'Збережено'" (click)="saveOrder()" ></button>
-      <input type="button" value="Прийняти" class="btn btn-success mt-2" (click)="changeOrderStatus(ordDetails,true)" >
-      <input type="button" value="Відхилити" class="btn btn-danger mt-2" (click)="changeOrderStatus(ordDetails,false)" >
+      <button type="button" [ngStyle]="{'width': '100%'}"  class="btn btn-warning" [textContent]="!editStatus? 'Зберегти зміни замовлення':'Збережено'" (click)="saveOrder()" ></button>
+      <button type="button"[ngStyle]="{'width': '100%'}"    class="btn btn-success mt-2" (click)="changeOrderStatus(ordDetails,true)" [textContent]="!orderStatus1? 'Прийняти':'Прийнято'"></button>
+      <button type="button" [ngStyle]="{'width': '100%'}"   class="btn btn-danger mt-2" (click)="changeOrderStatus(ordDetails,false)" [textContent]="!orderStatus2? 'Відхилити':'Відхилено'"></button>
      </div>
     </div>
   </ng-template>
-
-  <!-- <td>{{orderDetails.totalPayment}} грн</td> -->

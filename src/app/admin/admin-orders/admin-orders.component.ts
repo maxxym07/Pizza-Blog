@@ -31,6 +31,7 @@ export class AdminOrdersComponent implements OnInit {
 
 
   orderID = 1;
+  orderStatus: string;
   detailName: string; //for modal aboutUser
   detailPhone: string; //for modal aboutUser
   detailCity: string; //for modal aboutUser
@@ -39,7 +40,9 @@ export class AdminOrdersComponent implements OnInit {
   detailComment: string; //for modal aboutUser
 
   editStatus: boolean;
-
+  orderStatus1: boolean;
+  orderStatus2: boolean;
+  
   constructor(private orderService: OrderService,
     private modalService: BsModalService,
     private prodService: ProductService
@@ -79,18 +82,27 @@ export class AdminOrdersComponent implements OnInit {
     this.detailHouse = this.ordDetails.userHouse
     this.detailComment = this.ordDetails.userComment
     this.orderProducts = order.ordersDetails
-    this.editStatus= false;
+    this.editStatus = false;
+    this.orderStatus1 = false;
+    this.orderStatus2 = false;
 
     this.getTotal();
   }
 
   changeOrderStatus(ordDetails: IOrder, status: boolean): void {
     status == true ? ordDetails.status = 'Прийнято' : ordDetails.status = 'Відхилено';
-    this.modalService.hide(1);
+    this.orderStatus=ordDetails.status
+    if (status == true) {
+      this.orderStatus1 = true;
+    }
+    if (status == false) {
+      this.orderStatus2 = true;
+   }
   }
 
   completeOrder(order: IOrder): void {
     order.status = 'Завершено'
+    this.orderStatus= order.status
   }
 
   deleteOrder(order: IOrder): void {
@@ -137,11 +149,13 @@ export class AdminOrdersComponent implements OnInit {
       this.orderProducts,
       this.totalPrice,
       new Date(),
-      this.detailComment);
+      this.detailComment,
+      this.orderStatus,);
 
       this.orderService.updateOrder(product).subscribe(
         () => { this.getOrders(); }
       );
+    this.modalService.hide(1)
   }
 
 
