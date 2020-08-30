@@ -6,6 +6,9 @@
   .modal-order{
     max-width:1000px!important;
     }
+    .modal-open{
+      overflow: auto;
+    }
 
   
   a,
@@ -722,7 +725,7 @@
   
   @media (max-width: 1500px) {
     .productInfoWrapp .button {
-      //margin-left: 15px;
+      // margin-left: 15px;
     }
   }
   

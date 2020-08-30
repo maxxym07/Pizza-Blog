@@ -1,5 +1,5 @@
 {
-  "name": "la-piec",
+  "name": "laPiec",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -23,6 +23,7 @@
     "firebase": "^7.17.1",
     "ngx-bootstrap": "^5.6.1",
     "ngx-order-pipe": "^2.0.4",
+    "ngx-ui-loader": "^9.1.1",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { IBlog } from '../interfaces/blog.interfaces';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AngularFirestore, DocumentReference, DocumentChangeAction } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class BlogsService {
   }
   ];
   private url: string;
-  constructor(private http:HttpClient) {
+  constructor(private http:HttpClient,
+    private firestore:AngularFirestore) {
     this.url='http://localhost:3000/blogs'
    }
 
@@ -34,5 +36,23 @@ export class BlogsService {
 
   updateJSONBlog(discount: IBlog): Observable<IBlog>{
     return this.http.put<IBlog>(`${this.url}/${discount.id}`, discount);
+  }
+
+  ////////////////////firecloud//////////////////////////////////////
+
+  getFirecloudDiscounts(): Observable<DocumentChangeAction<unknown>[]>{
+    return this.firestore.collection('discounts').snapshotChanges()
+  }
+
+  postFirecloudDiscounts(discount:IBlog):Promise<DocumentReference>{
+    return this.firestore.collection('discounts').add(discount);
+  }
+
+  editFirecloudDiscounts(discount:IBlog):Promise<void>{
+    return this.firestore.collection('discounts').doc(discount.id.toString()).update(discount);
+  }
+
+  deleteFirecloudDiscounts(index: number) {
+    return this.firestore.collection('discounts').doc(index.toString()).delete();
   }
 }

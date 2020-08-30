@@ -3,7 +3,7 @@ import { ICategory } from "../interfaces/category.interface";
 
 export class Product implements IProduct{
     constructor(
-        public id: number,
+        public id:number,
         public category: ICategory,
         public nameEN: string,
         public nameUA: string,

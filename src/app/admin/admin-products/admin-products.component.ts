@@ -19,14 +19,14 @@ export class AdminProductsComponent implements OnInit {
   config = {
     ignoreBackdropClick: true
   }
-  
+
   categories: Array<ICategory> = [];
 
   categoryName = "choose category.."; //for select
 
   adminProduct: Array<IProduct> = [];
   productID = 1;
-  productCategory: ICategory = { id: 1, nameEN: 'pizza', nameUA: 'піца' };
+  productCategory: ICategory = { id: 1, nameEN: 'pizza', nameUA: 'pizza' };
   productNameEN: string;
   productNameUA: string;
   productDescription: string;
@@ -59,20 +59,46 @@ export class AdminProductsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getCategories();
-    this.getProducts();
+    // this.getCategories();
+    this.adminFirebaseCategories();
+    // this.getProducts();
+    this.adminFirebaseProducts();
   }
 
-  private getCategories(): void {
-    this.catService.getJSONCategory().subscribe(data => {
-      this.categories = data;
-    });
+  // private getCategories(): void {
+  //   this.catService.getJSONCategory().subscribe(data => {
+  //     this.categories = data;
+  //   });
+  // }
+
+  private adminFirebaseCategories(): void {
+    this.catService.getFireCloudCategory().subscribe(
+      collection => {
+        this.categories = collection.map(category => {
+          const data = category.payload.doc.data() as ICategory;
+          const id = category.payload.doc.id;
+          return { id, ...data };
+        })
+      }
+    )
   }
 
-  private getProducts(): void {
-    this.prodService.getJSONProduct().subscribe(data => {
-      this.adminProduct = data;
-    });
+  // private getProducts(): void {
+  //   this.prodService.getJSONProduct().subscribe(data => {
+  //     this.adminProduct = data;
+  //   });
+  // }
+
+  private adminFirebaseProducts(): void {
+    this.prodService.getFireCloudProduct().subscribe(
+      collection => {
+        this.adminProduct = collection.map(product => {
+          const data = product.payload.doc.data() as IProduct;
+          const id = product.payload.doc.id;
+          return { id, ...data };
+        })
+      }
+    )
   }
 
   setCategory(): void {
@@ -80,7 +106,7 @@ export class AdminProductsComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>): void {
-    this.modalRef = this.modalService.show(template,this.config);
+    this.modalRef = this.modalService.show(template, this.config);
   }
 
   addProduct(): void {
@@ -94,35 +120,42 @@ export class AdminProductsComponent implements OnInit {
       this.productPrice,
       this.productImage);
     if (!this.editStatus) {
-      if (this.productNameEN && this.productNameUA && this.productPrice&&this.categoryName !== "choose category..") {
+      if (this.productNameEN && this.productNameUA && this.productPrice && this.categoryName !== "choose category..") {
         delete product.id
-        this.prodService.postJSONProduct(product).subscribe(
-          () => {
-            this.getProducts()
-          }
-        )
-    this.resetForm()
+        // this.prodService.postJSONProduct(product).subscribe(
+        //   () => {
+        //     this.getProducts()
+        //   }
+        // )
+        this.prodService.postFireCloudProduct(Object.assign({},product))
+        this.resetForm()
       }
       else {
         alert('Головні поля НЕ ЗАПОВНЕНІ  (Category,Name EN, Name UA, Price)')
       }
     }
     else {
-      this.prodService.updateJSONProduct(product).subscribe(
-        () => {
-          this.getProducts();
-        }
-      );
-      this.editStatus = false;
-     this.resetForm()
+      // this.prodService.updateJSONProduct(product).subscribe(
+      //   () => {
+      //     this.adminFirebaseProducts();
+      //   }
+      // );
+      if (this.productNameEN && this.productNameUA && this.productPrice && this.categoryName !== "choose category..") {
+        this.prodService.updateFireCloudProduct(Object.assign({},product))
+        this.editStatus = false;
+        this.resetForm()
+      }
+      else {
+        alert('Головні поля НЕ ЗАПОВНЕНІ  (Category,Name EN, Name UA, Price)')
+      }
     }
   }
 
   editModal(template: TemplateRef<any>, product: IProduct): void {
     this.editStatus = true;
-    this.modalRef = this.modalService.show(template,this.config);
+    this.modalRef = this.modalService.show(template, this.config);
     this.productID = product.id
-    this.categoryName = product.category.nameEN
+    this.categoryName = "choose category..";
     this.productNameEN = product.nameEN
     this.productNameUA = product.nameUA
     this.productDescription = product.description
@@ -135,7 +168,7 @@ export class AdminProductsComponent implements OnInit {
   uploadFile(event): void {
     const file = event.target.files[0];
     const type = file.type.slice(file.type.indexOf('/') + 1);
-    const name = file.name.slice(0,file.name.lastIndexOf('.')).toLowerCase();
+    const name = file.name.slice(0, file.name.lastIndexOf('.')).toLowerCase();
     this.imageStatus = false;
     const filePath = `images/${name}.${type}`;
     const task = this.afStorage.upload(filePath, file);
@@ -150,16 +183,12 @@ export class AdminProductsComponent implements OnInit {
 
 
   deleteModal(template: TemplateRef<any>, product: IProduct): void {
-    this.modalRef = this.modalService.show(template,this.config);
+    this.modalRef = this.modalService.show(template, this.config);
     this.delete_id = product.id
   }
 
   deleteProduct(): void {
-    this.prodService.deleteJSONProduct(this.delete_id).subscribe(
-      () => {
-        this.getProducts();
-      }
-    );
+    this.prodService.deleteFireCloudProduct(this.delete_id)
     this.modalService.hide(1);
   }
 
@@ -170,7 +199,7 @@ export class AdminProductsComponent implements OnInit {
     }
     this.order = value;
   }
- //sort pipe
+  //sort pipe
 
   closeModal(): void {
     this.modalService.hide(1);

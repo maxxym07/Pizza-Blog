@@ -5,25 +5,21 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
-  loginStatus:boolean
-  constructor(private router: Router){}
-
+export class ProfileGuard implements CanActivate {
+  constructor(private router: Router) { }
+  
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.checkLogin();
   }
-  
   checkLogin(): boolean{
     const user = JSON.parse(localStorage.getItem('user'));
-    if (user != null && user.role == 'admin') {
-      this.loginStatus = true;
+    if (user != null && user.role == 'user') {
       return true;
     }
     else {
-      this.router.navigateByUrl('login');
-      this.loginStatus = false;
+      this.router.navigateByUrl('/home');
       return false
     }
   }

@@ -3,6 +3,7 @@ import { Subject, Observable } from 'rxjs';
 import { IProduct } from '../interfaces/product.interfaces';
 import { IOrder } from '../interfaces/order.interface';
 import { HttpClient } from '@angular/common/http';
+import { DocumentChangeAction, AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class OrderService {
   
   basket: Subject<any> = new Subject<any>();
   private url: string;
-  constructor(private http:HttpClient) {
+  constructor(private http: HttpClient,
+    private firestore:AngularFirestore) {
     this.url = 'http://localhost:3000/orders';
    }
 
@@ -50,4 +52,21 @@ export class OrderService {
     return this.http.delete<IOrder>(`${this.url}/${id}`);
   }
   
+  //////////////////////firecloud///////////////////////////////
+  
+getFirecloudOrders(): Observable<DocumentChangeAction<unknown>[]>{
+    return this.firestore.collection('orders').snapshotChanges()
+  }
+
+  addFirecloudOrder(order:IOrder):Promise<DocumentReference>{
+    return this.firestore.collection('orders').add(order);
+  }
+
+  deleteFirecloudOrder(id:number): Promise<void> {
+    return this.firestore.collection('orders').doc(id.toString()).delete();
+  }
+
+  updateFirecloudOrder(order: IOrder){
+    return this.firestore.collection('orders').doc(order.id.toString()).update(order);
+  }
 }

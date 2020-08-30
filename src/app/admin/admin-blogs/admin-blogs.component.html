@@ -1,45 +1,6 @@
-<!-- <input type="text" class="form-control " [(ngModel)]="bTitle" name="bTitle" id="title" placeholder="title here..">
-
-<textarea [(ngModel)]="bText" name="bText" id="dText" class="form-control"
-style="width: 100%; min-height: 200px; margin-top: 20px;" placeholder="text here..."></textarea>
-
-<input type="text" class="form-control " id="author" [(ngModel)]="bAuthor" name="bAuthor" placeholder="author here.." style="margin-top: 20px;">
-
-<button type="button" class="btn btn-dark mt-3" (click)="addBlog()" [textContent]="!editStatus ? 'Add' : 'Save edit'"></button>
-<hr>
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Title</th>
-        <th scope="col">Text</th>
-        <th scope="col">Date</th>
-        <th scope="col">Author</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let a of adminBlog; let i=index">
-        <td class="font-weight-bold">{{ i+1 }}</td>
-        <td>{{ a.title }}</td>
-        <td>{{ a.text }}</td>
-        <td>{{a.date|date}}</td>
-        <td>{{ a.author |titlecase}}</td>
-        <td>
-          <input type="button" value="edit" class="btn btn-dark" (click)="editDiscount(a)">
-        </td>
-        <td>
-          <input type="button" value="delete" class="btn btn-dark" (click)="deleteDiscount(a)">
-        </td>
-      </tr>
-    </tbody>
-  </table> -->
-
-
-  <div class="card">
+<div class="card">
     <div class="card-header">
-      <p class="card-text pFirst font-weight-bold">Blog </p>
+      <p class="card-text pFirst font-weight-bold">BLOGS</p>
       <button type="button" class="btn btn-dark butAdd" (click)="openModal(modal1)">Add Blog</button>
     </div>
 
@@ -50,7 +11,7 @@ style="width: 100%; min-height: 200px; margin-top: 20px;" placeholder="text here
         <thead class="table-active">
           <tr>
             <th scope="col" [ngStyle]="{'cursor': 'pointer'}"  [ngStyle]="{'width': '60px'}"
-            [class.active]="order === 'id'" (click)="setOrder('id')">#
+            [class.active]="order === 'id'" (click)="setOrder('id')">№
             <span [hidden]="reverse">▼</span>
             <span [hidden]="!reverse">▲</span>
             </th>
@@ -76,10 +37,10 @@ style="width: 100%; min-height: 200px; margin-top: 20px;" placeholder="text here
         </thead>
         <tbody>
           <tr *ngFor="let a of adminBlog|blogSearch:inputS|orderBy: order:reverse:'case-insensitive'; let i=index">
-        <td class="font-weight-bold">{{ a.id }}</td>
+        <td class="font-weight-bold">{{ i+1 }}</td>
         <td>{{ a.title }}</td>
         <td>{{ a.text }}</td>
-        <td>{{ a.date|date}}</td>
+        <td>{{ a.date.seconds*1000 | date}}</td>
         <td>{{ a.author |titlecase }}</td>
              <td>
             <input type="button" value="Edit" class="btn btn-dark" (click)="editModal(modal1,a)" >
@@ -97,9 +58,7 @@ style="width: 100%; min-height: 200px; margin-top: 20px;" placeholder="text here
 <ng-template #modal1>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Product modal</h4>
-    <button type="button" class="close pull-right" aria-label="Close"(click)="modalRef.hide()" (click)="closeModal()">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <button type="button" class="btn btn-secondary" aria-label="Close" (click)="modalRef.hide()">X</button>
   </div>
   <div class="modal-body">
       <form>

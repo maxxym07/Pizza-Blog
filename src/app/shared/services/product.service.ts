@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IProduct } from 'src/app/shared/interfaces/product.interfaces';
+import { AngularFirestore, DocumentChangeAction, DocumentReference } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { IProduct } from 'src/app/shared/interfaces/product.interfaces';
 export class ProductService {
 
   private url: string;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private firestore:AngularFirestore) {
     this.url = 'http://localhost:3000/products';
   }
 
@@ -47,5 +48,25 @@ export class ProductService {
       }
     }
   }
+
+  /////////////////////FireCloud/////////////////////////////////
   
+  getFireCloudProduct(): Observable<DocumentChangeAction<unknown>[]>{
+    return this.firestore.collection('products').snapshotChanges()
+  }
+
+  postFireCloudProduct(product:IProduct): Promise<DocumentReference>{
+    return this.firestore.collection('products').add(product);
+  }
+
+  deleteFireCloudProduct(id:number): Promise<void>{
+    return this.firestore.collection('products').doc(id.toString()).delete();
+  }
+
+  updateFireCloudProduct(product:IProduct): Promise<void>{
+    return this.firestore.collection('products').doc(product.id.toString()).update(product);
+  }
+
+
+
 }

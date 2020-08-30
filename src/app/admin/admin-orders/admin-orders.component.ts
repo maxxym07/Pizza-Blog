@@ -5,6 +5,7 @@ import { OrderService } from 'src/app/shared/services/order.service';
 import { IProduct } from '../../shared/interfaces/product.interfaces';
 import { ProductService } from 'src/app/shared/services/product.service';
 import { Order } from '../../shared/models/order.model';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 @Component({
@@ -45,22 +46,34 @@ export class AdminOrdersComponent implements OnInit {
   
   constructor(private orderService: OrderService,
     private modalService: BsModalService,
-    private prodService: ProductService
+    private prodService: ProductService,
+    private afStore: AngularFirestore
   ) {
 
   }
 
   ngOnInit(): void {
     this.getOrders();
-    this.adminJSONProduct();
-    this.getTotal()
+    // this.adminJSONProduct();
+    // this.getTotal()
   }
 
-  private getOrders(): void {
-    this.orderService.getOrder().subscribe(data => {
-      this.adminOrders = data;
+  // private getOrders(): void {
+  //   this.orderService.getOrder().subscribe(data => {
+  //     this.adminOrders = data;
 
-    })
+  //   })
+  // }
+
+  private getOrders(): void {
+    this.orderService.getFirecloudOrders().subscribe(collection => {
+      this.adminOrders = collection.map(order => {
+        const data = order.payload.doc.data() as IOrder;
+        const id = order.payload.doc.id;
+        return { id, ...data };
+      });
+    }
+    );
   }
 
     private adminJSONProduct(): void {
@@ -91,7 +104,8 @@ export class AdminOrdersComponent implements OnInit {
 
   changeOrderStatus(ordDetails: IOrder, status: boolean): void {
     status == true ? ordDetails.status = 'Прийнято' : ordDetails.status = 'Відхилено';
-    this.orderStatus=ordDetails.status
+    this.orderStatus = ordDetails.status
+    this.saveOrder()
     if (status == true) {
       this.orderStatus1 = true;
     }
@@ -106,10 +120,23 @@ export class AdminOrdersComponent implements OnInit {
   }
 
   deleteOrder(order: IOrder): void {
-    this.orderService.deleteOrder(order.id).subscribe(data => {
-      this.getOrders()
-    })
+    // this.orderService.deleteOrder(order.id).subscribe(data => {
+    //   this.getOrders()
+    // })
+    this.orderService.deleteFirecloudOrder(order.id);
+    this.getOrders()
   }
+
+  deleteProduct(product: IProduct): void {
+    if (confirm('Are you sure')) {
+      const index = this.orderProducts.findIndex(prod => prod.id === product.id);
+      this.orderProducts.splice(index, 1);
+      this.getTotal();
+      this.orderService.basket.next('check');
+      this.saveOrder()
+    }
+  }
+
 
   productCount(product: IProduct, status: boolean): void {
     this.prodService.productCountService(product, status)
@@ -126,20 +153,9 @@ export class AdminOrdersComponent implements OnInit {
   }
   // 
 
-
-  deleteProduct(product: IProduct): void {
-    if (confirm('Are you sure')) {
-      const index = this.orderProducts.findIndex(prod => prod.id === product.id);
-      this.orderProducts.splice(index, 1);
-      this.getTotal();
-      this.orderService.basket.next('check');
-    }
-  }
-
-
-  saveOrder() {
+ private saveOrder() {
     this.editStatus= true;
-    const product: IOrder = new Order(
+    const order: IOrder = new Order(
       this.orderID,
       this.detailName,
       this.detailPhone,
@@ -152,10 +168,16 @@ export class AdminOrdersComponent implements OnInit {
       this.detailComment,
       this.orderStatus,);
 
-      this.orderService.updateOrder(product).subscribe(
-        () => { this.getOrders(); }
-      );
+      // this.orderService.updateOrder(product).subscribe(
+      //   () => { this.getOrders(); }
+      // );
+    this.orderService.updateFirecloudOrder(Object.assign({}, order));
     this.modalService.hide(1)
+    if (this.totalPrice == 0) {
+      alert('Замовлення пусте і буде автоматично видалено!')
+      this.deleteOrder(order)
+      this.modalService.hide(1)
+    }
   }
 
 

@@ -59,10 +59,65 @@
             </span>
           </a>
         </div>
-        <div class="headerSection user-block adminka">
-          <a [routerLink]="[ '/admin' ]" >Admin</a>
+        <div class="headerSection user-block" *ngIf="!statusLogin">
+          <a (click)="loginModal(loginForm)">Увійти</a>
+        </div>
+        <div class="headerSection user-block"  *ngIf="statusLogin">
+          <a [routerLink]="[ '/'+urlName ]">{{menuName|titlecase }}</a>
         </div>
       </div>
     </div>
   </header> 
    
+
+  <ng-template #loginForm>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left" [textContent]="!switch ? 'Login Form': 'Register Form'"></h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="loginBlock" *ngIf="!switch">
+        <form (ngSubmit)="loginUser()">
+          <div class="form-group">
+            <label for="userEmail">Email address</label>
+            <input type="email" class="form-control" id="userEmail" [(ngModel)]="userEmail" name="userEmail">
+          </div>
+          <div class="form-group">
+            <label for="userPassword">Password</label>
+            <input type="text" class="form-control" id="userPassword" [(ngModel)]="userPassword" name="userPassword">
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+          <div class="form-group mt-3">
+            <a (click)="switchForm()">Don't have an Account? Register Now</a>
+          </div>
+        </form>
+      </div>
+      <div class="registerBlock" *ngIf="switch">
+        <form (ngSubmit)="registerUser()">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" [(ngModel)]="firstName" name="firstName">
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" [(ngModel)]="lastName" name="lastName">
+          </div>
+          <div class="form-group">
+            <label for="userEmail">Email address</label>
+            <input type="email" class="form-control" id="userEmail" [(ngModel)]="userEmail" name="userEmail">
+          </div>
+          <div class="form-group">
+            <label for="userPassword">Password</label>
+            <input type="text" class="form-control" id="userPassword" [(ngModel)]="userPassword" name="userPassword">
+          </div>
+          <button type="submit" class="btn btn-success">Register</button>
+          <div class="form-group mt-3">
+            <a (click)="switchForm()">Do have an Account? Login Now</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+  

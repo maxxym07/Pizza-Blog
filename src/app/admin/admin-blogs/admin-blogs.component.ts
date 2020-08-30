@@ -4,6 +4,7 @@ import { IBlog } from "src/app/shared/interfaces/blog.interfaces"
 import { Blog } from "src/app/shared/models/blog.model"
 import { OrderPipe } from 'ngx-order-pipe';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-admin-blogs',
@@ -33,17 +34,31 @@ export class AdminBlogsComponent implements OnInit {
 
   constructor(private blogService: BlogsService,
     private orderPipe: OrderPipe,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private afStorage: AngularFireStorage,
   ) { }
 
   ngOnInit(): void {
-    this.adminJSONBlogs()
+    // this.adminJSONBlogs()
+    this.adminFirebaseDiscounts();
   }
 
-  private adminJSONBlogs(): void{
-    this.blogService.getJSONBlogs().subscribe(data => {
-      this.adminBlog=data
-    })
+  // private adminJSONBlogs(): void{
+  //   this.blogService.getJSONBlogs().subscribe(data => {
+  //     this.adminBlog=data
+  //   })
+  // }
+
+  private adminFirebaseDiscounts(): void {
+    this.blogService.getFirecloudDiscounts().subscribe(
+      collection => {
+        this.adminBlog = collection.map(discount => {
+          const data = discount.payload.doc.data() as IBlog;
+          const id = discount.payload.doc.id;
+          return {id, ...data };
+        });
+      }
+    );
   }
 
   openModal(template: TemplateRef<any>): void {
@@ -58,35 +73,28 @@ export class AdminBlogsComponent implements OnInit {
       }
       else {
         delete newB.id;
-        this.blogService.postJSONBlog(newB).subscribe(
-          () => {
-            this.adminJSONBlogs();
-          }
-        );
+        // this.blogService.postJSONBlog(newB).subscribe(
+        //   () => {
+        //     this.adminJSONBlogs();
+        //   }
+        // );
+        this.blogService.postFirecloudDiscounts(Object.assign({},newB))
         this.resetForm()
       }
     }
     else {
-      this.blogService.updateJSONBlog(newB).subscribe(
-        () => {
-          this.adminJSONBlogs();
-        }
-      );
+      // this.blogService.updateJSONBlog(newB).subscribe(
+      //   () => {
+      //     this.adminJSONBlogs();
+      //   }
+      // );
+      this.blogService.editFirecloudDiscounts(Object.assign({},newB))
       this.editStatus = false;
       this.resetForm()
     }
     
   }
 
-  deleteDiscount(blog:IBlog): void{
-    if (confirm('Are you sure?')) {
-      this.blogService.deleteJSONBlog(blog.id).subscribe(
-        () => {
-          this.adminJSONBlogs()
-        }
-      );
-    }
-  }
 
   deleteModal(template: TemplateRef<any>, adminBlog: IBlog): void {
     this.modalRef = this.modalService.show(template,this.config);
@@ -94,11 +102,12 @@ export class AdminBlogsComponent implements OnInit {
   }
 
   deleteBlog(): void {
-    this.blogService.deleteJSONBlog(this.delete_id).subscribe(
-      () => {
-        this.adminJSONBlogs();
-      }
-    );
+    // this.blogService.deleteJSONBlog(this.delete_id).subscribe(
+    //   () => {
+    //     this.adminJSONBlogs();
+    //   }
+    // );
+    this.blogService.deleteFirecloudDiscounts(this.delete_id)
     this.modalService.hide(1);
   }
 

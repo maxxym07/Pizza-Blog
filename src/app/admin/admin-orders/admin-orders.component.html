@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between">
-      <p class="pProduct pFirst font-weight-bold">Редагування замовлень</p>
+      <p class="pProduct pFirst font-weight-bold">EDIT ORDERS</p>
     </div>
     <div class="card-body">
       <input type="text" class="form-control" [(ngModel)]="inputS" name="inputS" placeholder="Search order...">
@@ -34,12 +34,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let order of adminOrders|orderSearch:inputS |orderBy: order:reverse:'case-insensitive'">
-            <td>{{order.id }}</td>
+          <tr *ngFor="let order of adminOrders|orderSearch:inputS |orderBy: order:reverse:'case-insensitive' let i = index">
+            <td>{{i+1 }}</td>
             <td>{{order.userName }}</td>
             <td>{{ order.userPhone }}</td>
             <td>{{ order.totalPayment}} грн</td>
-            <td>{{ order.dateOrder |date }}</td>
+            <td>{{ order.dateOrder.seconds*1000 | date }}</td>
             <td class="font-italic">{{ order.status}}</td>
             <td class="edit">
               <input *ngIf="order.status=='В обробці'" type="button" value="Детально" class="btn btn-success" (click)="openDetailsModal(order,modal1)" >
@@ -56,7 +56,8 @@
 
   <ng-template #modal1>
     <div class="modal-header">
-      <h4 class="modal-title pull-left">Деталі замовлення №{{ordDetails.id}}</h4>
+      <h4 class="modal-title pull-left">Деталі замовлення</h4>
+      <button type="button" class="btn btn-secondary" aria-label="Close" (click)="modalRef.hide()">X</button>
     </div>
     <div class="modal-body">
       <h4 class="modal-title pull-left">Данні одержувача</h4>

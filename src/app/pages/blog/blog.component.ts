@@ -15,12 +15,27 @@ export class BlogComponent implements OnInit {
   constructor(private blogService:BlogsService) { }
 
   ngOnInit(): void {
-    this.userJSONBlog();
+    // this.userJSONBlog();
+    this.getBlogs();
   }
 
-  private userJSONBlog(): void {
-    this.blogService.getJSONBlogs().subscribe(data => {
-      this.userBlogs = data;
-    })
+
+  // private userJSONBlog(): void {
+  //   this.blogService.getJSONBlogs().subscribe(data => {
+  //     this.userBlogs = data;
+  //   })
+  // }
+
+  private getBlogs(): void {
+    this.blogService.getFirecloudDiscounts().subscribe(
+      collection => {
+        this.userBlogs = collection.map(discount => {
+          const data = discount.payload.doc.data() as IBlog;
+          const id = discount.payload.doc.id;
+          return {id, ...data };
+        });
+      }
+    );
   }
+  
 }

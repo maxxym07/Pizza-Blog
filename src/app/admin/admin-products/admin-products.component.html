@@ -1,6 +1,6 @@
  <div class="card">
     <div class="card-header">
-      <p class="card-text pFirst font-weight-bold">Products</p>
+      <p class="card-text pFirst font-weight-bold">PRODUCTS</p>
       <button type="button" class="btn btn-dark butAdd" (click)="openModal(modal1)">Add Product</button>
     </div>
 
@@ -11,10 +11,7 @@
         <thead class="table-active">
           <tr>
             <th scope="col" [ngStyle]="{'cursor': 'pointer'}"  [ngStyle]="{'width': '60px'}"
-            [class.active]="order === 'id'" (click)="setOrder('id')">#
-            <span [hidden]="reverse">▼</span>
-            <span [hidden]="!reverse">▲</span>
-            </th>
+            [class.active]="order === 'index'">№</th>
             <th scope="col" [class.active]="order === 'category.nameEN'" (click)="setOrder('category.nameEN')">Category Name
               <span [hidden]="reverse">▼</span>
               <span [hidden]="!reverse">▲</span>
@@ -48,7 +45,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let p of adminProduct|searchProducts:inputS|orderBy: order:reverse:'case-insensitive'; let i=index">
-        <td class="font-weight-bold">{{ p.id }}</td>
+        <td class="font-weight-bold">{{ i+1}}</td>
         <td>{{ p.category.nameEN }}</td>
         <td>{{ p.nameEN |titlecase}}</td>
         <td>{{ p.nameUA |titlecase}}</td>

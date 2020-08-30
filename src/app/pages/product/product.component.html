@@ -10,7 +10,7 @@
     <div class="row clear-md-3 clear-lg-3 clear-sm-2">
       <div class="col-sm-6 col-md-4" *ngFor="let prod of products">
         <div class="productThumbnail productItemAnimate animated">
-          <a [routerLink]="[ '/menu/'+prod.category.nameEN, prod.id ]"
+          <a [routerLink]="[ '/menu/'+prod.category.nameEN, prod.nameEN]"
            class="productImage preview preloaded"><img class="productMenuImage" [src]="prod?.image" alt="prod?.nameUA"></a>
            
           <div class="productInfoWrapp">
@@ -24,11 +24,10 @@
               <div class="productPrice">
                 <span>{{ prod.price*prod.count }}</span> <i>грн</i>
               </div>
-              <!-- <app-product-count [product]="prod"></app-product-count> -->
               <div class="productCountWrapper">
-                <span class="productCount lessProduct" (click)="productCount(prod, false)"></span>
-                <input type="text" maxlength="3" [value]="prod.count">
-                <span class="productCount moreProduct" (click)="productCount(prod, true)"></span>
+                <span class="productCount lessProduct" (click)="productCount(prod,false)"></span>
+                <input type="text" maxlength="3" [(ngModel)]="prod.count">
+                <span class="productCount moreProduct" (click)="productCount(prod,true)"></span>
               </div>
               <div class="button add-to-cart-product" (click)="addBasket(prod)">Замовити</div>
             </div>

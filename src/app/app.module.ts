@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,7 +25,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import { environment } from '../environments/environment';
+import { environment } from '../environments/environment.prod';
 import { SeachProductsPipe } from './shared/pipes/seach-products.pipe';
 import { BlogSearchPipe } from './shared/pipes/blog-search.pipe';
 import { BasketComponent } from './pages/basket/basket.component';
@@ -32,12 +33,14 @@ import { ProductComponent } from './pages/product/product.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { PaymentComponent } from './pages/payment/payment.component';
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
-import { LoginComponent } from './pages/login/login.component';
 import { OrderSearchPipe } from './shared/pipes/order-search.pipe';
 
 
+import { ProfileComponent } from './profile/profile.component';
+import { LoginComponent } from './login/login.component';
 
-
+import { NgxUiLoaderModule, NgxUiLoaderRouterModule } from 'ngx-ui-loader';
+import { loaderConfig } from './preloader-config';
 
 @NgModule({
   declarations: [
@@ -60,21 +63,24 @@ import { OrderSearchPipe } from './shared/pipes/order-search.pipe';
     ProductComponent,
     PaymentComponent,
     AdminOrdersComponent,
-    LoginComponent,
     OrderSearchPipe,
-
+    ProfileComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     ModalModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
-    OrderModule
+    OrderModule,
+    NgxUiLoaderModule.forRoot(loaderConfig),
+    NgxUiLoaderRouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

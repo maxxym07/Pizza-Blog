@@ -12,7 +12,11 @@ import { AdminCategoryComponent } from './admin/admin-category/admin-category.co
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
 import { AdminBlogsComponent } from './admin/admin-blogs/admin-blogs.component';
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
-import { LoginComponent } from './pages/login/login.component';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { ProfileGuard } from './shared/guards/profile.guard';
+
 
 
 const routes: Routes = [
@@ -24,9 +28,10 @@ const routes: Routes = [
   { path: 'payment', component: PaymentComponent },
   { path: 'basket', component: BasketComponent },
   { path: 'menu/:category', component: ProductComponent },
-  { path: 'menu/:category/:id', component: ProductDetailsComponent },
+  { path: 'menu/:category/:name', component: ProductDetailsComponent },
   { path: 'login', component: LoginComponent },
-  {path: 'admin', component: AdminComponent, children: [
+  { path: 'profile', component: ProfileComponent,canActivate: [ProfileGuard] },
+  {path: 'admin', component: AdminComponent, canActivate: [AuthGuard], children: [
     { path: '', redirectTo: 'category', pathMatch: 'full' },
     { path: 'category', component:AdminCategoryComponent },
     { path: 'products', component:AdminProductsComponent },
@@ -37,7 +42,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{scrollPositionRestoration:'enabled'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-      <p class="card-text pFirst font-weight-bold">Category</p>
+      <p class="card-text pFirst font-weight-bold">CATEGORIES</p>
       <button type="button" class="btn btn-dark butAdd" (click)="openModal(modal1)">Add</button>
     </div>
 
@@ -10,10 +10,7 @@
       <table class="table">
         <thead class="table-active">
           <tr>
-            <th scope="col" [ngStyle]="{'cursor': 'pointer'}" (click)="sortFNameCol()" [ngStyle]="{'width': '60px'}">#
-              <i class="fas fa-caret-up" *ngIf="sortIDCol"></i>
-              <i class="fas fa-caret-down" *ngIf="!sortIDCol"></i>
-            </th>
+            <th scope="col" [ngStyle]="{'cursor': 'pointer'}" (click)="sortFNameCol()" [ngStyle]="{'width': '60px'}">№</th>
             <th scope="col" class="text-secondary" [ngStyle]="{'cursor': 'pointer'}" (click)="sortSNameCol()">Name EN
               <i class="fas fa-caret-up" *ngIf="sortENCol"></i>
               <i class="fas fa-caret-down" *ngIf="!sortENCol"></i>
@@ -27,7 +24,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let c of adminCategory | search:inputS |sort:sortIDCol:sortENCol:sortUACol; let i=index">
-            <td class="font-weight-bold">{{ c.id }}</td>
+            <td class="font-weight-bold">{{i+1}}</td>
             <td>{{ c.nameEN }}</td>
             <td>{{ c.nameUA }}</td>
             <td>

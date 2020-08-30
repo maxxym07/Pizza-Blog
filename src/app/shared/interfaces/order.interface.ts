@@ -1,7 +1,7 @@
 import { IProduct } from './product.interfaces';
 
 export interface IOrder {
-    id: number;
+    id:number;
     userName: string;
     userPhone: string;
     userCity: string;

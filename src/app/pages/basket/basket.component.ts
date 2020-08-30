@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { IProduct } from 'src/app/shared/interfaces/product.interfaces';
 import { OrderService } from 'src/app/shared/services/order.service';
-import { ProductService } from 'src/app/shared/services/product.service';
 import { NgForm } from '@angular/forms';
 import { Order } from '../../shared/models/order.model';
-
+import { IOrder } from 'src/app/shared/interfaces/order.interface';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { User } from '../../shared/models/user.model';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { IUser } from 'src/app/shared/interfaces/user.interface';
+import { IProduct } from 'src/app/shared/interfaces/product.interfaces';
 
 @Component({
   selector: 'app-basket',
@@ -12,84 +15,111 @@ import { Order } from '../../shared/models/order.model';
   styleUrls: ['./basket.component.scss']
 })
 export class BasketComponent implements OnInit {
-  orders: Array<IProduct> = [];
+
+  order: Array<IProduct> = [];
+  allOrders: Array<IOrder> = []
   totalPrice = 0;
-
+  currentOrder: Array<IProduct>;
+  currentTotalPrice: number;
   orderID = 1;
-  userName: string;
-  userPhone: string;
-  userCity: string;
-  userStreet: string;
-  userHouse: string;
-  userComments: string;
+  orderComplete: boolean;
+  myUser: any;
 
-
-  constructor(private orderService: OrderService,
-    private prodService: ProductService,) { }
+  constructor(private ordService: OrderService,
+    private firestore: AngularFirestore) { }
 
   ngOnInit(): void {
     this.getBasket();
     this.getTotal();
+    // this.getUsersData();
   }
 
-  private getBasket(): void{
+  private getBasket(): void {
     if (localStorage.length > 0 && localStorage.getItem('myOrder')) {
-      this.orders = JSON.parse(localStorage.getItem('myOrder'));
+      this.order = JSON.parse(localStorage.getItem('myOrder'))
     }
   }
 
-  productCount(product: IProduct, status: boolean): void{
-    this.prodService.productCountService(product, status)
-    this.getTotal();
-    this.updateBasket();
-    this.orderService.basket.next('check');
-}
+  // private getUsersData(): void {
+  //   if (localStorage.length > 0 && localStorage.getItem('user')) {
+  //     let user = JSON.parse(localStorage.getItem('user'))
+  //     this.firestore.collection('users').ref.where('idAuthUser', '==', user.idAuthUser).onSnapshot(
+  //       collection => {
+  //         collection.forEach(document => {
+  //           const data = document.data() as IUser;
+  //           const id = document.id;
+  //           this.myUser = ({ id, ...data })
+  //         })
+  //       }
+  //     )
+  //   }
+  // }
 
 
-private getTotal(): void {
-  this.totalPrice = this.orders.reduce((total, prod) => {
-    return total + (prod.price * prod.count);
-  }, 0);
-}
-
-private updateBasket(): void {
-  localStorage.setItem('myOrder', JSON.stringify(this.orders));
-}
-
-deleteProduct(product: IProduct): void {
-  if (confirm('Are you sure')) {
-    const index = this.orders.findIndex(prod => prod.id === product.id)
-    this.orders.splice(index, 1);
-    this.updateBasket();
-    this.getTotal();
-    this.orderService.basket.next('check');
-  }
-}
-
-addOrder(form:NgForm): void{
-  const order = new Order(this.orderID,
-    form.controls.userName.value,
-    form.controls.userPhone.value,
-    form.controls.userCity.value,
-    form.controls.userStreet.value,
-    form.controls.userHouse.value,
-    this.orders,
-    this.totalPrice,
-    new Date(),
-    form.controls.userComments.value)
-    
-    delete order.id;
-  this.orderService.addOrder(order).subscribe(
-    () => {
-      this.resetBasket()
+  productCount(product: IProduct, status: boolean): void {
+    if (status) {
+      product.count++;
     }
-  )
-}
-private resetBasket(): void{
-  localStorage.clear();
-  this.orders = [];
-  this.totalPrice = 0;
-  this.orderService.basket.next('check');
-}
-  
+    else {
+      if (product.count > 1) {
+        product.count--;
+      }
+    }
+    this.getTotal();
+    this.updateBasket();
+    this.ordService.basket.next();
+  }
+
+  private getTotal(): void {
+    this.totalPrice = this.order.reduce((total, elem) => {
+      return total + (elem.price * elem.count);
+    }, 0)
+  }
+
+  private updateBasket(): void {
+    localStorage.setItem('myOrder', JSON.stringify(this.order))
+  }
+
+  deleteProduct(product: IProduct): void {
+    if (confirm('Are you sure?')) {
+      const index = this.order.findIndex(prod => prod.id === product.id);
+      this.order.splice(index, 1);
+      this.updateBasket();
+      this.getTotal();
+      this.ordService.basket.next();
+    }
+  }
+
+  addOrder(form: NgForm): void {
+    const order = new Order(this.orderID,
+      form.controls.userName.value,
+      form.controls.userPhone.value,
+      form.controls.userCity.value,
+      form.controls.userStreet.value,
+      form.controls.userHouse.value,
+      this.order,
+      this.totalPrice,
+      new Date().toString(),
+      form.controls.userComents.value);
+    delete order.id
+    // this.ordService.addOrder(order).subscribe(() => {
+    this.ordService.addFirecloudOrder(Object.assign({}, order))
+      .then(() => {
+        this.currentOrder = order.ordersDetails;
+        this.currentTotalPrice = this.totalPrice;
+        // this.updateUser(this.myUser, order);
+        this.updateBasket()
+        this.getTotal();
+        this.ordService.basket.next();
+        this.orderComplete = true;
+      });
+    this.order = [];
+    form.reset
+    // })
+  }
+
+  goHome(): void {
+    this.orderComplete = false;
+  }
+
 }
